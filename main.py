@@ -8,17 +8,17 @@ headers = {
     "Content-Type": "application/json"
 }
 
-print("[FORBID] Clean-Render Broadcaster Initialized...")
+print("[FORBID] Clean-Text Broadcaster Initialized...")
 
 session = requests.Session()
 
 def blast_room(room_url):
     try:
-        # Cleaned up RichText syntax to prevent raw code glitches while keeping it massive and bold
+        # Pure uppercase text without HTML tags so it renders cleanly without raw code showing
         payload = {
-            "Sender": '<font color="#FF0000"><b>FORBID</b></font>',
-            "Message": '<font color="#FF0000"><b>HACKED BY FORBID | DISCORD: forbiddenway</b></font>',
-            "Text": '<font color="#FF0000"><b>HACKED BY FORBID | DISCORD: forbiddenway</b></font>',
+            "Sender": "FORBID",
+            "Message": "⚠️ HACKED BY FORBID | DISCORD: forbiddenway ⚠️",
+            "Text": "⚠️ HACKED BY FORBID | DISCORD: forbiddenway ⚠️",
             "Timestamp": int(time.time() * 1000),
             "Aura": "voidWings",
             "Color": "red"
